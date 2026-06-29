@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Student Registration</title>
+</head>
+<body>
+    <header><h1>Student Registration Hub</h1></header>
+    <nav><a href="index.html">Home</a><a href="search.html">Course Search</a><a href="registration.html" class="active">Student Registration</a><a href="schedule.html">Instructor Schedule</a><a href="enrollment.html">Session Enrollment</a></nav>
+    <main>
+        <div class="card" style="max-width: 400px;">
+            <h2>Student Login</h2>
+            <label>Student ID</label><input type="text" value="S00123456">
+            <button>View My Account</button>
+        </div>
+        <div class="card">
+            <h2>Your Current Enrolled Sessions</h2>
+            <table>
+                <tr><th>Course</th><th>Section</th><th>Status</th><th>Action</th></tr>
+                <tr><td>INFO 465</td><td>001</td><td>Enrolled</td><td><button style="background-color:#dc2626;">Drop</button></td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <h2>Register for a New Session</h2>
+            <label>Select Session</label>
+            <select id="sessionSelect">
+                <option value="duplicate">INFO 465 - Section 001 (Duplicate registration attempt)</option>
+                <option value="full">CMSC 256 - Section 002 (Session Full - 45/45 enrolled)</option>
+            </select>
+            <button onclick="mockValidate()">Submit Registration</button>
+            <p id="validationMessage" style="margin-top:1rem; font-weight:bold;"></p>
+        </div>
+    </main>
+    <script>
+        function mockValidate() {
+            let choice = document.getElementById('sessionSelect').value;
+            let msg = document.getElementById('validationMessage');
+            if(choice === 'duplicate') {
+                msg.style.color = '#dc2626';
+                msg.innerText = "Validation Error: You are already registered for this course section.";
+            } else {
+                msg.style.color = '#dc2626';
+                msg.innerText = "Validation Error: Cannot enroll. This session has reached its maximum cap limit.";
+            }
+        }
+    </script>
+</body>
+</html>

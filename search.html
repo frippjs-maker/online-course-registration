@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Course Search</title>
+</head>
+<body>
+    <header><h1>University Portal: Course Catalog</h1></header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="search.html" class="active">Course Search</a>
+        <a href="registration.html">Student Registration</a>
+        <a href="schedule.html">Instructor Schedule</a>
+        <a href="enrollment.html">Session Enrollment</a>
+    </nav>
+    <main>
+        <div class="card">
+            <h2>Find Available Courses</h2>
+            <div style="display: flex; gap: 15px;">
+                <input type="text" placeholder="Search by Instructor or Course #...">
+                <select>
+                    <option>All Departments</option>
+                    <option>Computer Science</option>
+                    <option>Information Systems</option>
+                </select>
+                <button style="height: 40px; margin-top: 8px;">Search</button>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Search Results</h3>
+            <table>
+                <tr><th>Course #</th><th>Title</th><th>Credits</th><th>Prerequisites</th><th>Modality</th><th>Max Enroll</th></tr>
+                <tr><td>INFO 465</td><td>Senior Capstone Project</td><td>3</td><td>INFO 365</td><td>In-Person</td><td>30</td></tr>
+                <tr><td>CMSC 256</td><td>Data Structures</td><td>4</td><td>CMSC 255</td><td>Hybrid</td><td>45</td></tr>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
