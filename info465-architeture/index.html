@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Course Enrollment Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #f4f6f9; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        button:hover { background-color: #0056b3; }
+        .course-card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 4px; background: #fafafa; }
+        #response-message { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Nexus Course Enrollment</h1>
+    <p>Welcome to the INFO 465 student demo portal.</p>
+    
+    <hr>
+    
+    <h2>Available Courses</h2>
+    <button id="load-courses-btn">View Course Catalog</button>
+    <div id="course-list"></div>
+
+    <hr>
+
+    <h2>Simulate Registration Flow</h2>
+    <p>Clicking register below fires a <code>POST</code> request across your network setup.</p>
+    <button id="register-btn">Register for INFO465</button>
+
+    <div id="response-message"></div>
+</div>
+
+<script>
+    // 1. GET Request: Fetch and display courses
+    document.getElementById('load-courses-btn').addEventListener('click', async () => {
+        try {
+            const response = await fetch('/api/courses');
+            const courses = await response.json();
+            
+            const courseListDiv = document.getElementById('course-list');
+            courseListDiv.innerHTML = ''; // Clear previous content
+            
+            courses.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.innerHTML = `
+                    <strong>${course.course_code}: ${course.title}</strong><br>
+                    Credits: ${course.credits} | Capacity: ${course.max_capacity}
+                `;
+                courseListDiv.appendChild(card);
+            });
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+        }
+    });
+
+    // 2. POST Request: Submit registration payload
+    document.getElementById('register-btn').addEventListener('click', async () => {
+        const payload = {
+            student_id: 999, // Static testing student ID
+            course_id: 1     // Static testing course ID for INFO465
+        };
+
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            const messageDiv = document.getElementById('response-message');
+            
+            // Show success alert dynamically (DOM mutation) without full-page refresh
+            messageDiv.className = 'success';
+            messageDiv.style.display = 'block';
+            messageDiv.innerHTML = `
+                <strong>Registration Success (HTTP ${response.status})!</strong><br>
+                Enrollment ID: ${data.enrollment_id}<br>
+                Timestamp: ${data.registration_date}
+            `;
+        } catch (error) {
+            console.error('Error submitting registration:', error);
+        }
+    });
+</script>
+</body>
+</html>
